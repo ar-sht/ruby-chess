@@ -18,3 +18,8 @@ class Board
     end
   end
 end
+
+p = Pawn.new([0, 0], 0)
+p.pretty_print
+puts
+p p.moves

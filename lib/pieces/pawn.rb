@@ -10,13 +10,16 @@ class Pawn < Piece
   ].freeze
 
   def initialize(position, color)
-    generate_possible_moves
-    super(position, @moves, :pawn, color)
+    @position = position
+    @color = color
+    @moves = []
+    possible_moves
+    super(@position, @moves, :pawn, @color)
   end
 
-  def generate_possible_moves
+  def possible_moves
     @moves = []
-    TRANSFORMS.map { |t| [t[0] + position[0], t[1] + position[1]] }
+    TRANSFORMS.map { |t| [t[0] + @position[0], t[1] + @position[1]] }
               .select { |move| valid?(move) }
               .each { |move| @moves.append(move) }
 
@@ -25,9 +28,5 @@ class Pawn < Piece
 
   def starting_position?
     @position[1] == (@color.zero? ? 1 : 6)
-  end
-
-  def valid?(move)
-    move.all? { |coord| coord.between?(0, 7) }
   end
 end

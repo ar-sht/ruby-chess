@@ -1,5 +1,4 @@
 require_relative '../tools/square'
-require_relative '../board'
 
 class Piece
   include Square
@@ -31,10 +30,8 @@ class Piece
   def purge_move(move)
     @moves.delete(move)
   end
+
+  def valid?(move)
+    move.all? { |coord| coord.between?(0, 7) }
+  end
 end
-
-pawn = Piece.new([0, 0], [[0, 1], [0, 2]], :pawn, 0)
-pawn.print_piece(1)
-
-w_pawn = Piece.new([0, 0], [[0, 1], [0, 2]], :pawn, 1)
-w_pawn.print_piece(0)

@@ -1,10 +1,12 @@
+require_relative 'piece'
+
 class Knight < Piece
 
   TRANSFORMS = [
     [1, 2],
     [-1, 2],
     [1, -2],
-    [-1 -2],
+    [-1, -2],
     [2, 1],
     [-2, 1],
     [2, -1],
@@ -12,17 +14,16 @@ class Knight < Piece
   ].freeze
 
   def initialize(position, color)
-    generate_possible_moves
-    super(position, @moves, :knight, color)
+    @position = position
+    @color = color
+    @moves = []
+    possible_moves
+    super(@position, @moves, :knight, @color)
   end
 
   def possible_moves
-    TRANSFORMS.map { |t| [t[0] + position[0], t[1] + position[1]] }
-              .select { valid?(move) }
+    TRANSFORMS.map { |t| [t[0] + @position[0], t[1] + @position[1]] }
+              .select { |move| valid?(move) }
               .each { |move| @moves.append(move) }
-  end
-
-  def valid?(move)
-    move.all? { |coord| coord.between?(0, 7) }
   end
 end
